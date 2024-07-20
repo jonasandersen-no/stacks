@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  tunnel:
+    restart: unless-stopped
+    image: cloudflare/cloudflared
+    command: tunnel --loglevel debug --config /etc/cloudflared/config/config.yaml run
+    volumes:
+      - /opt/cloudflared-credentials/config-server:/etc/cloudflared/config
+    networks:
+      - public
+networks:
+  public:
+    external: true

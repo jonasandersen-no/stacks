@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  config-server:
+    restart: unless-stopped
+    image: bjoggis/config-server
+    ports:
+      - 8888:8888
+    environment:
+      - ENCRYPT_KEY=$ENCRYPT_KEY
+      - SPRING_CLOUD_CONFIG_JDBC_URL=$SPRING_CLOUD_CONFIG_JDBC_URL
+      - SPRING_CLOUD_CONFIG_JDBC_USERNAME=$SPRING_CLOUD_CONFIG_JDBC_USERNAME
+      - SPRING_CLOUD_CONFIG_JDBC_PASSWORD=$SPRING_CLOUD_CONFIG_JDBC_PASSWORD
+      - SPRING_CLOUD_CONFIG_SECURITY_USERNAME=$SPRING_CLOUD_CONFIG_SECURITY_USERNAME
+      - SPRING_CLOUD_CONFIG_SECURITY_PASSWORD=$SPRING_CLOUD_CONFIG_SECURITY_PASSWORD
+    networks:
+      - public
+networks:
+  public:
+    external: true
