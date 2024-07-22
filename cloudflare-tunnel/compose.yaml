@@ -5,7 +5,7 @@ services:
     image: cloudflare/cloudflared
     command: tunnel --loglevel debug --config /etc/cloudflared/config/config.yaml run
     volumes:
-      - /opt/cloudflared-credentials/config-server:/etc/cloudflared/config
+      - /opt/cloudflared-credentials/public:/etc/cloudflared/config
     networks:
       - public
 networks:

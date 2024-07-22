@@ -9,6 +9,13 @@ services:
       - /opt/dockge-stuff/uptimekuma:/app/data
     networks:
       - public
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.uptime-kuma.rule=Host(`monitor.jonasandersen.no`)
+        && PathPrefix(`/status`)
+      - traefik.http.routers.uptime-kuma.entrypoints=http-external
+      - traefik.http.routers.uptime-kuma-int.rule=Host(`monitor-int.jonasandersen.no`)
+      - traefik.http.routers.uptime-kuma-int.entrypoints=http,https
 networks:
   public:
     external: true

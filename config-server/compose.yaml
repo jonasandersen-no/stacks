@@ -3,8 +3,6 @@ services:
   config-server:
     restart: unless-stopped
     image: bjoggis/config-server
-    ports:
-      - 8888:8888
     environment:
       - ENCRYPT_KEY=$ENCRYPT_KEY
       - SPRING_CLOUD_CONFIG_JDBC_URL=$SPRING_CLOUD_CONFIG_JDBC_URL
@@ -14,6 +12,11 @@ services:
       - SPRING_CLOUD_CONFIG_SECURITY_PASSWORD=$SPRING_CLOUD_CONFIG_SECURITY_PASSWORD
     networks:
       - public
+    labels:
+      - traefik.enabled=true
+      - traefik.http.routers.config-server.rule=Host(`config.jonasandersen.no`)
+      - traefik.http.routers.config-server.endpoints=http,https
+      - traefik.http.services.config-server.loadbalancer.server.port=8888
 networks:
   public:
     external: true
