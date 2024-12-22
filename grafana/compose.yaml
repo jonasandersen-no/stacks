@@ -4,7 +4,7 @@ services:
     image: grafana/grafana-oss:10.4.12
     container_name: grafana
     volumes:
-      - /opt/dockge-stuff/grafana:/var/lib/grafana
+      - /mnt/data/grafana:/var/lib/grafana
     restart: unless-stopped
     networks:
       - public
@@ -19,12 +19,12 @@ services:
     image: prom/prometheus:v2.55.1
     command: --config.file=/etc/prometheus/prometheus.yaml
     volumes:
-      - /opt/dockge-stuff/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
-      - /opt/dockge-stuff/prometheus:/prometheus
+      - /mnt/data/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
+      - /mnt/data/prometheus:/prometheus
     networks:
       - public
     extra_hosts:
-    - "host.docker.internal:host-gateway"
+      - host.docker.internal:host-gateway
   node_exporter:
     image: prom/node-exporter:v1.8.2
     container_name: node-exporter
