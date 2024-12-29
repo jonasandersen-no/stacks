@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   grafana:
-    image: grafana/grafana-oss:10.4.12
+    image: grafana/grafana-oss:11.4.0
     container_name: grafana
     volumes:
       - /mnt/data/grafana:/var/lib/grafana
@@ -35,6 +35,16 @@ services:
     restart: unless-stopped
     volumes:
       - /:/host:ro,rslave
+  loki:
+    image: grafana/loki:3.3.0
+    ports:
+      - 3100:3100
+    command: -config.file=/etc/loki/local-config.yaml
+    restart: unless-stopped
+    networks:
+      - public
+    volumes:
+      - /mnt/data/loki:/loki
 networks:
   public:
     external: true
