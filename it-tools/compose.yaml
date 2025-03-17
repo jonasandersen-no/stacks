@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  it-tools:
+    restart: unless-stopped
+    image: corentinth/it-tools:latest
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.it-tools.rule=Host(`it-tools.jonasandersen.dev`)
+      - traefik.http.services.it-tools.loadbalancer.server.port=80
+      - traefik.http.routers.it-tools.entrypoints=http,https
+    networks:
+      - public
+networks:
+  public:
+    external: true

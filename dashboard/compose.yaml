@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  dashy:
+    restart: unless-stopped
+    image: lissy93/dashy:latest
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.dashboard.rule=Host(`dashboard.jonasandersen.dev`)
+      - traefik.http.services.dashboard.loadbalancer.server.port=8080
+      - traefik.http.routers.dashboard.entrypoints=http,https
+    networks:
+      - public
+    volumes:
+      - /mnt/data/dashy/config.yml:/app/user-data/conf.yml
+networks:
+  public:
+    external: true

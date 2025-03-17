@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  otterwiki:
+    restart: unless-stopped
+    image: redimp/otterwiki:2
+    volumes:
+      - /mnt/data/data/otterwiki:/app-data
+    ports:
+      - 9596:80
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.otterwiki.rule=Host(`wiki.jonasandersen.no`)
+      - traefik.http.services.otterwiki.loadbalancer.server.port=9596
+      - traefik.http.routers.otterwiki.entrypoints=http,https
+    networks:
+      - public
+networks:
+  public:
+    external: true

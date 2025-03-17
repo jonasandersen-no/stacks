@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  reposilite:
+    image: dzikoysk/reposilite:3.5.20
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      - JAVA_OPTS=-Xmx${MEMORY} ${JAVA_COMPOSE_OPTS}
+      - REPOSILITE_OPTS=--port ${PORT} ${REPOSILITE_COMPOSE_OPTS}
+    volumes:
+      - /mnt/data/reposilite:/app/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.reposilite.rule=Host(`maven.jonasandersen.no`)
+      - traefik.http.routers.reposilite.entrypoints=http-external
+      - traefik.http.services.reposilite.loadbalancer.server.port=${PORT}
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    networks:
+      - public
+networks:
+  public:
+    external: true

@@ -2,7 +2,7 @@ version: "3.8"
 services:
   reverse-proxy:
     # The official v3 Traefik docker image
-    image: traefik:v3.2
+    image: traefik:v3.3.4
     container_name: traefik
     # Enables the web UI and tells Traefik to listen to docker
     ports:
@@ -16,11 +16,12 @@ services:
     volumes:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/traefik/acme.json:/acme.json
+      - /opt/traefik/certs:/certs
       - /opt/traefik/traefik.yml:/traefik.yml:ro
-      - /opt/traefik/config.yaml:/config.yml:ro
+   #   - /opt/traefik/config.yaml:/config.yml:ro
     networks:
       - public
+    restart: unless-stopped
 networks:
   public:
     external: true

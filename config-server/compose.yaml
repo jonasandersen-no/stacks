@@ -2,9 +2,10 @@ version: "3.8"
 services:
   config-server:
     restart: unless-stopped
-    image: bjoggis/config-server:v3.12.6
+    image: bjoggis/config-server:v4
     container_name: config-server
     environment:
+      - SPRING_PROFILES_ACTIVE=prod
       - ENCRYPT_KEY=$ENCRYPT_KEY
       - SPRING_CLOUD_CONFIG_JDBC_URL=$SPRING_CLOUD_CONFIG_JDBC_URL
       - SPRING_CLOUD_CONFIG_JDBC_USERNAME=$SPRING_CLOUD_CONFIG_JDBC_USERNAME

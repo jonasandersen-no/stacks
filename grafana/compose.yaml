@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   grafana:
-    image: grafana/grafana-oss:11.4.0
+    image: grafana/grafana-oss:11.5.2
     container_name: grafana
     volumes:
       - /mnt/data/grafana:/var/lib/grafana
@@ -10,9 +10,12 @@ services:
       - public
     labels:
       - traefik.enable=true
-      - traefik.http.routers.grafana.rule=Host(`grafana.jonasandersen.no`)
+      - traefik.http.routers.grafana.rule=(Host(`grafana.jonasandersen.no`) ||
+        Host(`grafana.jonasandersen.dev`))
       - traefik.http.services.grafana.loadbalancer.server.port=3000
-      - traefik.http.routers.grafana.entrypoints=http,https
+      - traefik.http.routers.grafana.entrypoints=http,https,http-external
+    environment:
+      - GF_SERVER_ROOT_URL=https://grafana.jonasandersen.no
   prometheus:
     container_name: prometheus
     restart: unless-stopped
