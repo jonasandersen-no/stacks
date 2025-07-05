@@ -14,7 +14,7 @@ services:
       - public
     labels:
       - traefik.enable=true
-      - traefik.http.routers.config-server.rule=HostRegexp(`^config\.(jonasandersen.no|bjoggis.com)$`)
+      - traefik.http.routers.config-server.rule=HostRegexp(`^config\.(jonasandersen.no|bjoggis.com)$$`)
       - traefik.http.routers.config-server.entrypoints=http,https
       - traefik.http.services.config-server.loadbalancer.server.port=8888
 networks:
